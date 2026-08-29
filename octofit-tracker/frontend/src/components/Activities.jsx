@@ -1,8 +1,14 @@
 import { useEffect, useMemo, useState } from 'react';
 
+const endpoint = '/api/activities/';
+
 const getApiBaseUrl = () => {
   const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
-  return codespaceName ? `https://${codespaceName}-8000.app.github.dev` : 'http://localhost:8000';
+  const apiBaseUrl = codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev`
+    : 'http://localhost:8000';
+
+  return apiBaseUrl;
 };
 
 const getRecords = (payload) => {
@@ -37,7 +43,7 @@ export default function Activities() {
 
     const loadActivities = async () => {
       try {
-        const response = await fetch(`${getApiBaseUrl()}/api/activities/`);
+        const response = await fetch(`${getApiBaseUrl()}${endpoint}`);
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`);
         }
