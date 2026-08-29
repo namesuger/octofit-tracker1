@@ -1,14 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 
-const endpoint = '/api/teams/';
-
 const getApiBaseUrl = () => {
   const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
-  const apiBaseUrl = codespaceName
-    ? `https://${codespaceName}-8000.app.github.dev`
-    : 'http://localhost:8000';
 
-  return apiBaseUrl;
+  return codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev/api/teams/`
+    : 'http://localhost:8000/api/teams/';
 };
 
 const getRecords = (payload) => {
@@ -43,7 +40,7 @@ export default function Teams() {
 
     const loadTeams = async () => {
       try {
-        const response = await fetch(`${getApiBaseUrl()}${endpoint}`);
+        const response = await fetch(getApiBaseUrl());
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`);
         }
